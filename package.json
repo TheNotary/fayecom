@@ -1,15 +1,20 @@
 {
   "name": "fayecom",
   "description": "A node server for publishing data from an authenticated source to un-authenticated clients using faye.",
-  "version": "0.0.1",
-
   "repository" : {
     "type": "git", 
     "url": "git://github.com/TheNotary/fayecom.git"
   },
-  "main" : "app.js",
+
+  "version": "0.0.1",
+  "main" : "lib/fayecom.js",
+  "bin": {
+      "fayecom": "./bin/fayecom"
+  },
+
   "dependencies": {
     "faye": "*",
+    "app-root-path": "*",
     "forever": "*"
   },
   "license": "MIT"

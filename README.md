@@ -88,5 +88,9 @@ setTimeout(function(){
     - https://www.airpair.com/node.js/posts/top-10-mistakes-node-developers-make
 
 
+  - Using upstart instead of forever
+    > https://www.npmjs.com/package/upstarter
+
+
 
 

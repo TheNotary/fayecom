@@ -4,6 +4,12 @@
     configured, but it won't do websockets correctly over http when https
     is selected...
 
+currently:
+
+  - implement a configuration file
+
+  - make npm install -g ; fayecom work!  (npm cli)
+
 
 finished:
 
