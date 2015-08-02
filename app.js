@@ -5,17 +5,25 @@ var authToken = process.env[authTokenEnvName];
 
 var https = require('https'),
     http = require('http'),
+    url=require('url'),
     fs = require('fs'),
-    faye = require('faye');
+    faye = require('faye'),
+    pjson = require('./package.json');
 
 // This line is from the Node.js HTTPS documentation.
 var options = {
   key: fs.readFileSync('test/fixtures/keys/key.pem'),
-  cert: fs.readFileSync('test/fixtures/keys/cert.pem')  // was *.cert
+  cert: fs.readFileSync('test/fixtures/keys/cert.pem')
 };
 
-var tlsServer = https.createServer(options),
-    server = http.createServer(),
+var tlsServer = https.createServer(options, function(request, response){
+      var pathname = url.parse(request.url, true).pathname;
+      if (pathname == "/version") response.end(pjson.version);
+    }),
+    server = http.createServer(function(request, response){
+      var pathname = url.parse(request.url, true).pathname;
+      if (pathname == "/version") response.end(pjson.version);
+    }),
     bayeux = new faye.NodeAdapter({mount: '/faye', timeout: 45});
 
 // Echo messages the server receives
@@ -45,7 +53,7 @@ var serverOnlyWriteAccess = {
 
 };
 
-console.log("starting server");
+console.log("FayeCom " + pjson.version + "\nstarting server");
 
 bayeux.addExtension(serverOnlyWriteAccess);
 

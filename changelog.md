@@ -7,6 +7,7 @@
 
 finished:
 
+  - API: added /version for looking up fayecom version
 
 # 0.0.1
   - implemented versioning

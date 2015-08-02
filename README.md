@@ -60,4 +60,33 @@ setTimeout(function(){
 
 
 
+## Node Cliffnotes for Rails Hackers
+
+  - nodejs is unique in that it is based around the concept of non-blocking code, not just that it's js for server side
+    > a node app runs as a signle process, a single thread, node has no concept of threads
+    > Node apps are parsed, and all your code does is register events.  
+    > after your app evaluates, your app enters it's event loop where events are handled accordingly as they come into the event que (single thread)
+    >>> That's how a single threaded node app can listen on multiple ports, those listen calls are non-blocking, they register events
+
+  - package.json lists dependencies, project metadata, the 'entrypoint' or main js file, and project version
+
+  - node_modules/ is where dependencies are installed to when you type `npm install`, don't version track it
+
+  - To debug on breakpoints, start with the parameter debug, `node debug app.js`
+    > `cont` will continue to the next `debugger;` statement in your code
+    > `repl` will allow you to interact with the environment at your current position
+
+  :: Oragnization of Code ::
+    - Modules - 
+      > require("yourfile.js") will return a module composed of methods.
+        You assign methods to a module via `exports.myMethod= function(){return "hello module"}`
+        var o = require("yourfile.js").myMethod();
+        // => "hello module"
+        ref: http://kevgriffin.com/node-js-using-require-to-load-your-own-files/
+
+  - Misc dev hints
+    - https://www.airpair.com/node.js/posts/top-10-mistakes-node-developers-make
+
+
+
 
