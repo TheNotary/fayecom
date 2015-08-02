@@ -4,6 +4,7 @@ var port = 8000,
 var authToken = process.env[authTokenEnvName];
 
 var https = require('https'),
+    http = require('http'),
     fs = require('fs'),
     faye = require('faye');
 
@@ -13,7 +14,8 @@ var options = {
   cert: fs.readFileSync('test/fixtures/keys/cert.pem')  // was *.cert
 };
 
-var server = https.createServer(options),
+var tlsServer = https.createServer(options),
+    server = http.createServer(),
     bayeux = new faye.NodeAdapter({mount: '/faye', timeout: 45});
 
 // Echo messages the server receives
@@ -46,8 +48,12 @@ var serverOnlyWriteAccess = {
 console.log("starting server");
 
 bayeux.addExtension(serverOnlyWriteAccess);
+
 bayeux.attach(server);
 server.listen(port);
+
+bayeux.attach(tlsServer);
+tlsServer.listen(port+1);
 
 
 
