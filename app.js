@@ -1,11 +1,9 @@
 var port = 8000,
-    authTokenEnvName = "SAVE_KITTENS_FAYE_TOKEN",
-    mode = "https";
+    authTokenEnvName = "SAVE_KITTENS_FAYE_TOKEN";
 
 var authToken = process.env[authTokenEnvName];
 
-var http = require('http'),
-    https = require('https'),
+var https = require('https'),
     fs = require('fs'),
     faye = require('faye');
 
@@ -15,8 +13,7 @@ var options = {
   cert: fs.readFileSync('test/fixtures/keys/cert.pem')  // was *.cert
 };
 
-var server = http.createServer(),
-    tlsServer = https.createServer(options),
+var server = https.createServer(options),
     bayeux = new faye.NodeAdapter({mount: '/faye', timeout: 45});
 
 // Echo messages the server receives
@@ -49,10 +46,9 @@ var serverOnlyWriteAccess = {
 console.log("starting server");
 
 bayeux.addExtension(serverOnlyWriteAccess);
-if (mode == "https")
-  server = tlsServer;
 bayeux.attach(server);
 server.listen(port);
+
 
 
 function xinspect(o,i){
