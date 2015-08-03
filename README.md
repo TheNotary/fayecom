@@ -35,16 +35,25 @@ Start the app.
 
 Browser clients can now connect.  This system is designed to interact with MANY browser clients, and usually ~1 ruby server client (which signals to all the clients).  
 
+
+Debian at eff uses systemctl, systemd... https://github.com/rubenv/node-systemd
+Check the config directory...
+
+
+It's most professional to use initd-forever to start your node process on system boot, and bring it back up even when it crashes.
+  
+    $  npm install -g initd-forever
+    $  initd-forever # will make fayecom which is an init.d script...
+    $  mv fayecom /etc/init.d/fayecom && chmod 0755 /etc/init.d/fayecom
+
+
+ref:  https://www.npmjs.com/package/initd-forever
+
+
 It's even better to upstarter to get the server to stay online and boot on system boot.  
 
     $  npm install -g upstarter
     
-    $  cd ~/dev/fayecom
-    $  upstarter (configure settings via terminal GUI)
-    $  service fayecom start
-    $  service fayecom status
-
-ref:  https://www.npmjs.com/package/upstarter
 
 
 ## Testing
@@ -96,9 +105,11 @@ The below snippet was super helpful for testing if the server was online.
     - https://www.airpair.com/node.js/posts/top-10-mistakes-node-developers-make
 
 
-  - Using upstart instead of forever
+  - Using sysvinit (default debian)
+    > https://www.npmjs.com/package/initd-forever
+  - Using upstart (default ubuntu/ linux mint)
     > https://www.npmjs.com/package/upstarter
-  - Using forever
+  - Using forever (cli)
     > http://blog.nodejitsu.com/keep-a-nodejs-server-up-with-forever/
 
 

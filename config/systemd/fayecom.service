@@ -1,0 +1,8 @@
+# Adjust according to man 5 systemd.exec
+
+[Service]
+ExecStart=/usr/local/bin/node /usr/local/bin/fayecom
+StandardOutput=syslog
+User=nobody
+Group=nobody
+
