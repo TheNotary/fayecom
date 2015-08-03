@@ -8,11 +8,11 @@ currently:
 
   - implement a configuration file
 
-  - make npm install -g ; fayecom work!  (npm cli)
 
 
 finished:
 
+  - CORE:  restructured project layout, now distributed as binary package
   - API: added /version for looking up fayecom version
 
 # 0.0.1
