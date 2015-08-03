@@ -33,7 +33,9 @@ Start the app.
 
     `$  fayecom`
 
-Browser clients can now connect.  This system is designed to interact with MANY browser clients, and usually ~1 ruby server client (which signals to all the clients).  
+Browser clients can now connect.  
+This system is designed to interact with MANY browser clients, and usually ~1 ruby server client (which signals to all the clients).  
+Requests to /version will be restponded to with the version of fayecom.  
 
 
 The best way to start it is with forever.  Just plop in some code to boot forever on @reboot in `crontab`

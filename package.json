@@ -7,16 +7,14 @@
   },
 
   "version": "0.0.1",
-  "main" : "lib/fayecom.js",
+  "main" : "./lib/fayecom.js",
   "bin": {
       "fayecom": "./bin/fayecom"
   },
 
   "dependencies": {
     "faye": "*",
-    "is-there": "*",
-    "app-root-path": "*",
-    "forever": "*"
+    "is-there": "*"
   },
   "license": "MIT"
 }
