@@ -8,6 +8,8 @@ currently:
 
   - implement a configuration file
 
+  - implement daemon -d option
+
 
 
 finished:

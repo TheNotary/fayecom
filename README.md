@@ -36,23 +36,12 @@ Start the app.
 Browser clients can now connect.  This system is designed to interact with MANY browser clients, and usually ~1 ruby server client (which signals to all the clients).  
 
 
-Debian at eff uses systemctl, systemd... https://github.com/rubenv/node-systemd
-Check the config directory...
+The best way to start it is with forever.  Just plop in some code to boot forever on @reboot in `crontab`
+    
+    $  /usr/local/bin/forever start /usr/local/bin/fayecom
 
 
-It's most professional to use initd-forever to start your node process on system boot, and bring it back up even when it crashes.
-  
-    $  npm install -g initd-forever
-    $  initd-forever # will make fayecom which is an init.d script...
-    $  mv fayecom /etc/init.d/fayecom && chmod 0755 /etc/init.d/fayecom
 
-
-ref:  https://www.npmjs.com/package/initd-forever
-
-
-It's even better to upstarter to get the server to stay online and boot on system boot.  
-
-    $  npm install -g upstarter
     
 
 
