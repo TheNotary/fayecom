@@ -16,6 +16,9 @@
     "faye": "*",
     "is-there": "*"
   },
+  "scripts": {
+    "start": "node lib/fayecom.js"
+  },
   "license": "MIT"
 }
 
