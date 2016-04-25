@@ -15,6 +15,7 @@ $  npm install -g
 # Boot with Docker
 
 ```
+$  docker build -t john/fayecom .
 $  docker run -p 8000:8000 -p 4430:4430 john/fayecom
 ```
 
