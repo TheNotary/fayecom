@@ -1,6 +1,7 @@
 ## FayeCom
 This is a nodejs app that allows for passing messages to clients using efficient websockets on an as-needed basis.  
 
+
 ## Install and Run Locally
 
 - Install nodejs (compile from source)
@@ -19,13 +20,14 @@ $  npm install -g
 $  npm start
 ```
 
-- Boot it from global install
+- Or boot it from the global install
 
 ```
 $  fayecom
 FayeCom 0.x.x
 starting server
 ```
+
 
 # Boot with Docker if you don't want to deal with the above crap
 
@@ -35,7 +37,7 @@ $  docker run -p 8000:8000 -p 4430:4430 john/fayecom
 ```
 
 
-## Configuration
+## Server Configuration
 
 Some configuration values are at the top of app.js, but check in env.json first, it's got all the easy stuff.  
 
@@ -50,13 +52,33 @@ $  openssl req -newkey rsa:2048 -new -nodes -x509 -days 3650 -keyout key.pem -ou
 The development keys are locked into this repo, and went public, so remake the keys for production use.  
 
 
+## Client Configuration
+
+It's easy to get a web browser client setup.  A sample config might be:
+
+```
+<script type="text/javascript" src="http://fayecom.example.com:8000/fayecom.js"></script>
+
+<script>
+  var fayecom = new Fayecom({
+    fayecom_address: 'example.com',
+    fayecom_protocol: 'http',
+    fayecom_port: '8000'})
+
+  fayecom.subscriptions.add("/channel", function(message) {
+    alert('got a message: ' + message);
+  });
+</script>
+```
+
+
 ### Server Only Publishing
 This app is designed to allow only the server to publish messages to the subscribers.  This rule is enforced with a secret authentication token specified on the server in charge of publishing.  
 
 
 ## Usage
 
-Once you've got the app running (see the install step) clients will be able to connect (perhaps via save_kittens in a browser).  This system is designed to interact with MANY browsers and clients, and usually ~1 ruby server client (which signals to all the clients).  Requests to /version will be responded to with the version of fayecom.  
+Once you've got the app running, clients will be able to connect (perhaps via save_kittens in a browser).  This system is designed to interact with MANY subscribing browser clients, and usually ~1 publishing 'client'.  Requests to /version will be responded to with the version of fayecom.  Requests to `/fayecom.js` we be responded to with a helper library for making channel subscription that much simpler.  
 
 
 ### Deploy as Service
@@ -68,9 +90,10 @@ One way to start the fayecom as a production service is with forever.  Just plop
 $  /usr/local/bin/forever start /usr/local/bin/fayecom
 ```
 
+
 #### Push to Dokku
 
-This repo can actually be pushed directly to dokku (and maybe heroku too) because it has been dockerized.  Just be sure to send over the configuration values in env.json as actual ENV vars.  
+This repo can actually be pushed directly to Heroku/ Dokku because it has been dockerized (read the Dockerfile to get a better understanding of this).  Just be sure to send over the configuration values in env.json as actual ENV vars on the push-to-deploy platform you choose.  
 
 
 ## Testing
@@ -81,16 +104,17 @@ The below snippet was super helpful for testing if the server was online.
 
 ```
 // Browser test Client Snippet, logs 3 if successful connection
-var channel = "/save_kittens/data/fresh_data";
-var url = location.protocol + "//" + document.domain + ":8000/faye";
-var fayeClient = new Faye.Client(url);
-var subscription = fayeClient.subscribe(channel, function(message) {
-  // message: {"signatureCount":54,"topThreeStates":["CA"]}
-  alert(message);
+var fayecom = new Fayecom({
+  fayecom_address: '127.0.0.1',
+  fayecom_protocol: 'http',
+  fayecom_port: '8000'})
+
+fayecom.subscriptions.add("/channel", function(message) {
+  alert('got a message: ' + message);
 });
 
 setTimeout(function(){
-  console.log(fayeClient._state);
+  console.log(fayecom.fayeClient._state);
 }, 500);
 ```
 
